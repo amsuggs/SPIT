@@ -11,7 +11,6 @@ from scipy import signal
 
 dispersionMeasure = 80
 signal = PSS.Signal(TotTime = 50, bw = 40, SignalType = 'voltage', data_type = 'int16')
-
 Psr1 = PSS.Pulsar(signal)
 Psr1.make_pulses()
 
