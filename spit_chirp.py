@@ -10,6 +10,7 @@ params = ap.parse_args() #Read in flags and arguments. Stored as dot-accessible 
 
 #Generates a quadratic chirp. Takes in number of samples, amplitude, 
 #starting frequency, ending frequency, sample time, and pulse offset.
+#nr_samples should be twice the highest frequecy.
 def quad_chirp(nr_samples=int(params.nr_samples), amp=float(params.amplitude), f0=int(params.begin), f1=int(params.end), t1=int(params.time), phi=int(params.phi)):
     #Calculation section.
     t=np.linspace(0,t1,nr_samples) #Array of samples.

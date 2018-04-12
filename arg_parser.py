@@ -20,6 +20,13 @@ def parse_args():
     parser.add_argument('-p', '--phi', help = 'Phase offset', default = 0.0)
     parser.add_argument('-o', '--output', help = 'Name for output file', default = 'spit_pulse')
     parser.add_argument('-v', '--version', action = 'version', version = 'SPIT 0.1')
+    
+    parser.add_argument('-f', '--frequency', help = 'Central frequency of the pulse to create, '
+                       'measured in MHz.', default = 1400)
+    parser.add_argument('-w', '--bandwidth', help = 'Bandwidth of the pulse to create, '
+                        'measured in MHz.', default = 40)
+    parser.add_argument('-m', '--milliseconds', help = 'Total time, '
+                       'measured in milliseconds.', default = 200)
 
     #Parse the arguments as given by the command line.
     #Stores the results in a python namespace.
