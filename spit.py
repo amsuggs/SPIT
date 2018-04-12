@@ -7,12 +7,12 @@ import scipy as sp
 from scipy import signal
 import pickle
 import datetime
-import arg_parser as ap
+import pss_arg_parser as ap
 
 params = ap.parse_args()#Read in flags and arguments. Stored as dot-accessible members in a namespace.
 
 #create a signal with the given parameters, or defaults.
-Sig1 = PSS.Signal(f0 = int(params.frequency), bw = int(params.bandwidth), TotTime = int(params.milliseconds), SignalType = 'voltage', data_type = 'int16')
+Sig1 = PSS.Signal(f0 = int(params.frequency), bw = int(params.bandwidth), TotTime = int(params.period), SignalType = 'voltage', data_type = 'int16')
 
 #create a pulsar from that signal and then create pulses
 Psr1 = PSS.Pulsar(Sig1)
@@ -21,7 +21,7 @@ Psr1.make_pulses()
 # cast to int32, maybe float32???
 now = datetime.datetime.now()
 data_to_write = np.array([])
-file_str = "PulsarSignalOutputs/notebook_signal_1(%s).bin" % (now.isoformat())
+file_str = "OutputFiles/pss_complex_signal(%s).bin" % (now.isoformat())
 #write data to a file as interleaved real and imaginary values
 with open(file_str, 'wb') as file:
     for index in range(0, Psr1.phase.size):
