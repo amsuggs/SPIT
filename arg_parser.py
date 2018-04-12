@@ -15,6 +15,7 @@ def parse_args():
     parser.add_argument('-e', '--end', help = 'Ending frequency, '
                         'Frequency sweep will begin at this value, ' 
                         'measured in Hz.', default = 0)
+                        # TODO change to Period in ms
     parser.add_argument('-t', '--time', help = 'Amount of time the sample will last, '
                         'measured in seconds.', default = 1)
     parser.add_argument('-p', '--phi', help = 'Phase offset', default = 0.0)
