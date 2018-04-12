@@ -8,7 +8,6 @@
 
 ## Getting Started
 
-<<<<<<< Updated upstream
 1. Install python<br>
     https://www.python.org/downloads/
 2. Get python dependencies<br>
