@@ -26,7 +26,7 @@
 ## Developer Information
 SPIT's first implementation relied heavily on the Pulsar Signal Simulator (PSS) library, but has since moved on to implementations developed by the SPIT team themselves. PSS may be integrated and supported in future versions.
 
-##Flags
+## Flags
 
 * -n: Number of samples for given time period, default = 8192
 * -a: Amplitude of sine/cosine, default = 1.0
