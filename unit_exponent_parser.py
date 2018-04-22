@@ -5,7 +5,7 @@ prefix_map = {}
 
 # fills dictionary with common metric prefixes with their corresponding exponentiation
 def define_prefix_map():
-    if prefix_map['Y']:
+    if 'Y' in prefix_map:
         return
     prefix_map['Y'] = 24
     prefix_map['Z'] = 21
