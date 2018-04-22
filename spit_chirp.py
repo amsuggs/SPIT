@@ -19,7 +19,7 @@ def quad_chirp(nr_samples=int(params.samples), amp=float(params.amplitude), f0=i
     ft = f1 * t + beta * ((t1 - t) ** 3 - t1 ** 3) / 3 #Instantaneous frequency. Array.
     real = np.cos(2*np.pi*ft + phi) #Real component of the chirp.
     imag = np.sin(2*np.pi*ft + phi) #Imaginary component of the chirp.
-    sig = amp*(real + 1j * imag) #Output signal. Real and imaginary components combined.
+    sig = amp*(real - 1j * imag) #Output signal. Real and imaginary components combined.
     
     #Plotting section.
 #    plt.clf()
@@ -39,7 +39,7 @@ def gauss_pulse(chirp, x, mean=int(params.peak), std_dev=int(params.width)):
     gauss = (1/math.sqrt(2*math.pi*std_dev**2))*(math.e**(-(x-mean)**2/(2*std_dev**2)))
     real = chirp.real*gauss
     imag = chirp.imag*gauss
-    pulse = np.complex64(real + 1j * imag)
+    pulse = np.complex64(real - 1j * imag)
     
     #Plotting section.
 #    plt.clf()
