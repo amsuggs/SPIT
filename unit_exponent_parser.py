@@ -48,15 +48,25 @@ def apply_unit_and_exponents(inputStr):
     modified_str = inputStr.replace(' ', '')
     modified_str = modified_str.replace('+', '')
 
+    matcher = re.compile('(-?\d+[.]?\d*)e(-?\d+)([a-zA-Z])(?:[a-zA-Z]?)*');
+    matches = matcher.match(modified_str)
+    if matches:
+        retval = float(matches.group(1)) * (pow(10.0, float(matches.group(2))))
+
+        exponent = get_exp(matches.group(3))
+        if not exponent:
+            raise ValueError('Invalid Prefix: ' + matches.group(3))
+        return float(retval * (pow(10.0, exponent)))
+
     # regular expression to match "digits"e"optional-""digits"
     # ex: 5e-20
-    matcher = re.compile('(\d+[.]?\d*)e(-?\d+)')
+    matcher = re.compile('(-?\d+[.]?\d*)e(-?\d+)')
     matches = matcher.match(modified_str)
     if matches:
         return float(matches.group(1)) * (pow(10.0, float(matches.group(2))))
 
     # regular expression matching number
-    matcher = re.compile('(\d+[.]?\d*)([a-zA-Z])[a-zA-Z]?')
+    matcher = re.compile('(-?\d+[.]?\d*)([a-zA-Z])(?:[a-zA-Z]?)*')
     matches = matcher.match(modified_str)
     # if unit...ed?
     if matches:
