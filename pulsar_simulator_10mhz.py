@@ -104,9 +104,9 @@ print("Start Writing...")
 data_to_write = np.array([])
 with open("k-pulse.bin", 'ab') as file:
     for index in range(0, dispersed_downsampled_filtered_mixed_down_s.size):
-        real = dispersed_downsampled_filtered_mixed_down_s[index].real
-        imag = dispersed_downsampled_filtered_mixed_down_s[index].imag
-        p1 = real + 1j * imag
+        imag = dispersed_downsampled_filtered_mixed_down_s[index].real
+        real = dispersed_downsampled_filtered_mixed_down_s[index].imag
+        p1 = -1 * real + 1j * imag
         file.write(bytes(np.complex64(p1)))
         tenth = dispersed_downsampled_filtered_mixed_down_s.size/10
         if((index % tenth) == 0):
