@@ -1,6 +1,7 @@
 #-h help
 import argparse as ap
 
+
 def parse_args():
     #Initialize ArgumentParser object.
     parser = ap.ArgumentParser(description = 'Generate Pulsar data.')
