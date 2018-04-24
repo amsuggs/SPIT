@@ -15,13 +15,13 @@ vals = {}
 
 # run all values through unit and exponent parser
 def apply_unit_and_exponentiation():
-    print(params)
     vals['freq'] = int(uep.apply_unit_and_exponents(params.frequency))
     vals['bandwidth'] = int(uep.apply_unit_and_exponents(params.bandwidth))
-    vals['period'] = int(uep.apply_unit_and_exponents(params.period))
+    vals['period'] = float(uep.apply_unit_and_exponents(params.period))
     if vals['period'] != params.period:
         vals['period'] *= 1000
 
+    print(vals)
 
 apply_unit_and_exponentiation()
 
@@ -31,19 +31,17 @@ Sig1 = PSS.Signal(f0 = vals['freq'], bw = vals['bandwidth'], TotTime = vals['per
 # create a pulsar from that signal and then create pulses
 Psr1 = PSS.Pulsar(Sig1)
 Psr1.make_pulses()
-  
-now = datetime.datetime.now()
 
 # write files
-data_to_write = np.array([])
-file_str = "OutputFiles/pss_complex_signal(%s).bin" % (now.isoformat())
+pulse = np.array([])
+file_str = "OutputFiles/pss_complex_signal.bin"
 
 with open(file_str, 'wb') as file:
     for index in range(0, Psr1.phase.size):
         real = Psr1.signal[0][index]
         imag = Psr1.signal[1][index]
-        p1 = real + 1j * imag
-        pulse = np.append(pulse, np.complex64(p1))
+        p = np.complex64(real - 1j * imag)
+        pulse = np.append(pulse, p)
     file.write(bytearray(pulse))
     file.close()
     
