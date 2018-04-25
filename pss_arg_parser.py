@@ -12,7 +12,8 @@ def parse_args():
                         'measured in milliseconds.', default = 200)
     parser.add_argument('-f', '--file', help = 'Name for output file', default = 'pss_complex_pulse')
     parser.add_argument('-v', '--version', action = 'version', version = 'SPIT 0.1')
-
+    parser.add_argument('-l', '--plot', action = 'store_true')
+    
     # Parse the arguments as given by the command line.
     # Stores the results in a python namespace.
     args = parser.parse_args()

@@ -50,14 +50,15 @@ def quad_chirp(nr_samples=vals['samples'], amp=vals['amplitude'], f0=vals['begin
     sig = amp * np.complex64(real - 1j * imag)  # Output signal. Real and imaginary components combined.
     
     #Plotting section.
-#    plt.clf()
-#    plt.subplot(1,1,1)
-#    plt.title("Quadratic Chirp, f(0)=%g, f(%g)=%g" % (f0, t1, f1))
-#    plt.ylabel('Amplitude')
-#    plt.xlabel('time (sec)')
-#    plt.plot(t, sig.real)
-#    plt.plot(t, sig.imag)
-#    plt.show()
+    if params.plot:
+        plt.clf()
+        plt.subplot(1,1,1)
+        plt.title("Quadratic Chirp, f(0)=%g, f(%g)=%g" % (f0, t1, f1))
+        plt.ylabel('Amplitude')
+        plt.xlabel('time (sec)')
+        plt.plot(t, sig.real)
+        plt.plot(t, sig.imag)
+        plt.show()
 
     gauss_pulse(chirp = sig, x = t) #Gauss pulse generation
 
@@ -72,12 +73,13 @@ def gauss_pulse(chirp, x, mean=vals['peak'], std_dev=vals['width']):
     pulse = np.complex64(real - 1j * imag)
     
     #Plotting section.
-#    plt.clf()
-#    plt.subplot(1,1,1)
-#    plt.title("Gaussian pulse")
-#    plt.plot(pulse.real)
-#    plt.plot(pulse.imag)
-#    plt.show()
+    if params.plot:
+        plt.clf()
+        plt.subplot(1,1,1)
+        plt.title("Gaussian pulse")
+        plt.plot(pulse.real)
+        plt.plot(pulse.imag)
+        plt.show()
 
     now = time.strftime("%m.%d.%Y") + "-" + time.strftime("%H.%M.%S")
     file_str = "OutputFiles/" + params.file + "(%s).bin" % now #append the datetime to the end of the file.
