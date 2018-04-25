@@ -77,7 +77,7 @@ downsampled_filtered_mixed_down_s = filtered_mixed_down_s[::int(fs_rf/(Fbw))]
 
 #repeat pulse to get ~0.15 sec.
 # downsampled_filtered_mixed_down_s_repeated = np.tile(downsampled_filtered_mixed_down_s, 30)
-downsampled_filtered_mixed_down_s_repeated = downsampled_filtered_mixed_down_s
+downsampled_filtered_mixed_down_s_repeated = np.tile(downsampled_filtered_mixed_down_s, 30)
 
 
 # Check how long dispersion actually is, need to have significantly longer than this worth of data to not worry.
@@ -104,20 +104,20 @@ plt.show()
 ##### Write to File #####
 print("Start Writing...")
 data_to_write = np.array([])
-real = dispersed_downsampled_filtered_mixed_down_s.real
-imag = dispersed_downsampled_filtered_mixed_down_s.imag
-pulse = np.complex64(real - 1j * imag)
+# real = dispersed_downsampled_filtered_mixed_down_s.real
+# imag = dispersed_downsampled_filtered_mixed_down_s.imag
+# pulse = np.complex64(real - 1j * imag)
 with open("k-pulse-pr-ni-array.bin", 'wb') as file:
-    # for index in range(0, dispersed_downsampled_filtered_mixed_down_s.size):
-    #     real = dispersed_downsampled_filtered_mixed_down_s[index].real
-    #     imag = dispersed_downsampled_filtered_mixed_down_s[index].imag
-    #     p1 = real - 1j * imag
-    #     # file.write(bytes(np.complex64(p1)))
-    #     tenth = dispersed_downsampled_filtered_mixed_down_s.size/10
-    #     if((index % tenth) == 0):
-    #         print(str(int(index / tenth * 10)) + "%")
-    #     data_to_write = np.append(data_to_write, np.complex64(p1))
-    file.write(bytearray(pulse))
+    for index in range(0, dispersed_downsampled_filtered_mixed_down_s.size):
+        real = dispersed_downsampled_filtered_mixed_down_s[index].real
+        imag = dispersed_downsampled_filtered_mixed_down_s[index].imag
+        p1 = real - 1j * imag
+        file.write(bytes(np.complex64(p1)))
+        tenth = dispersed_downsampled_filtered_mixed_down_s.size/10
+        if((index % tenth) == 0):
+            print(str(int(index / tenth * 10)) + "%")
+        data_to_write = np.append(data_to_write, np.complex64(p1))
+    # file.write(bytearray(pulse))
     file.close()
 print("Finished Writing")
 
@@ -165,30 +165,4 @@ dispersed_downsampled_filtered_mixed_down_s.real.max()
 dispersed_downsampled_filtered_mixed_down_s.imag.max()
 
 2**15-2
-
-#dispersed_downsampled_filtered_mixed_down_s = dispersed_downsampled_filtered_mixed_down_s*32766/0.05556601286186533
-
-#dispersed_downsampled_filtered_mixed_down_s.imag.max()
-
-#dispersed_downsampled_filtered_mixed_down_s_real = dispersed_downsampled_filtered_mixed_down_s.real.astype(np.int16)
-#dispersed_downsampled_filtered_mixed_down_s_imag = dispersed_downsampled_filtered_mixed_down_s.imag.astype(np.int16)
-
-#dispersed_downsampled_filtered_mixed_down_s_real[:10]
-
-#dispersed_downsampled_filtered_mixed_down_s.real[:10]
-
-#dispersed_downsampled_filtered_mixed_down_s.real.max()
-
-#dispersed_downsampled_filtered_mixed_down_s_real.shape
-
-#out = np.zeros(2*len(dispersed_downsampled_filtered_mixed_down_s_real), dtype=np.int16)
-
-#out[::2] = dispersed_downsampled_filtered_mixed_down_s_real
-#out[1::2] = dispersed_downsampled_filtered_mixed_down_s_imag
-
-#out[:20]
-
-#out.shape
-
-#out.tofile('pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long.bin')
 
