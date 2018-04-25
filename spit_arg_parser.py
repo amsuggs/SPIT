@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument('-w', '--width', help = 'The width of the pulse, '
                         'measured in milliseconds', default = 100)
     parser.add_argument('-v', '--version', action = 'version', version = 'SPIT 0.1')
-
+    parser.add_argument('-l', '--plot', action = 'store_true')
     #Parse the arguments as given by the command line.
     #Stores the results in a python namespace.
     args = parser.parse_args()
