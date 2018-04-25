@@ -30,7 +30,7 @@
 * -a, --amplitude: Amplitude of cosine/sine wave, default = 1.0
 * -b, --begin: Beginning frequency, frequency sweep will begin at this value, measured in Hz., default = 20
 * -e, --end: Ending frequency, Frequency sweep will end at this value, measured in Hz, default = 0
-* -p, --period: Amount of time the cycle will last, measured in milliseconds, default = 1000
+* -p, --period: Amount of time the cycle will last, measured in seconds, default = 1
 * -o, --offset: Phase offset, default = 0.0
 * -f, --file: Name for output file, default = 'spit_pulse'
 * -k, --peak: Where the peak of the pulse occurs in the period, measured in milliseconds, default = 500

@@ -16,7 +16,7 @@ def parse_args():
                         'Frequency sweep will end at this value, ' 
                         'measured in Hz.', default = 0)
     parser.add_argument('-p', '--period', help = 'Amount of time the cycle will last, '
-                        'measured in milliseconds.', default = 1000)
+                        'measured in seconds.', default = 1000)
     parser.add_argument('-o', '--offset', help = 'Phase offset', default = 0.0)
     parser.add_argument('-f', '--file', help = 'Name for output file', default = 'spit_pulse')
     parser.add_argument('-k', '--peak', help = 'Where the peak of the pulse occurs in the period, '
