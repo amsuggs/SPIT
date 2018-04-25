@@ -17,7 +17,7 @@ def apply_units_and_exponentiation():
     vals['amplitude'] = float(uep.apply_unit_and_exponents(params.amplitude))
     vals['begin'] = int(uep.apply_unit_and_exponents(params.begin))
     vals['end'] = int(uep.apply_unit_and_exponents(params.end))
-    vals['period'] = int(uep.apply_unit_and_exponents(params.period))
+    vals['period'] = float(uep.apply_unit_and_exponents(params.period))
     if vals['period'] != params.period:
         vals['period'] *= 1000
     vals['offset'] = int(uep.apply_unit_and_exponents(params.offset))
