@@ -1,8 +1,7 @@
-## Sim Pulsar 12ghz sampling -> downsample
-# %matplotlib notebook
 import numpy as np
-import pickle
-from matplotlib.pyplot import *
+import matplotlib.pyplot as plt
+## Sim Pulsar 12ghz sampling -> downsample
+# from matplotlib.pyplot import *
 
 ### gaussian pulse, 0.4ms width, 5ms period.  dm of 15? pc/cm^3. 0.15 second sim?
 Fbw = 10e6  #total bandwidth wanted
@@ -21,16 +20,16 @@ s = np.random.normal(mu, sigma, l)  # create random noise signal
 #gaussian profile  4ms width
 s = np.exp(-t**2/(2*0.0004**2))*s
 
-figure()
-plot(s[::1000])
+# figure()
+# plot(s[::1000])
 
 # freq data
 fpulse = np.fft.fft(s)
 
 # should look like nice broadband noise.  
 freq = np.fft.fftfreq(l,1.0/(fs_rf/1e6))
-figure()
-plot(freq[::1000], np.abs(fpulse[::1000])**2)
+# figure()
+# plot(freq[::1000], np.abs(fpulse[::1000])**2)
 
 #bandpass the pulse to receiver band.
 Fbw = 10e6  #bandwidth wanted
@@ -52,14 +51,14 @@ freq = np.fft.fftfreq(l,1.0/(fs_rf/1e6))  #megahertz frequencies.
 signal_lo_complex = np.exp(-2.0j*np.pi * Flo/fs_rf * np.arange(l) )  #create mixing signal
 
 # now band limited,  Real signal.  
-figure()
-plot(freq[::1000], np.abs(fpulse[::1000])**2)
+# figure()
+# plot(freq[::1000], np.abs(fpulse[::1000])**2)
 
 band_limited_s = np.fft.ifft(fpulse)
 
 # show band limited pulse.  Still basically the same.  
-figure()
-plot(band_limited_s[::1000])
+# figure()
+# plot(band_limited_s[::1000])
 
 #mix down and filter, so that have I Q data for bandwidth
 mixed_down_s = band_limited_s*signal_lo_complex
@@ -72,12 +71,14 @@ downsampled_filtered_mixed_down_s = filtered_mixed_down_s[::int(fs_rf/(Fbw))]
 #complex sampled at 10MHz instead of 12GHz
 
 # Any sim should basically be able to start here.  Use gaussian noise, filter with same time width.
-figure()
-plot(downsampled_filtered_mixed_down_s[::100].real)
-plot(downsampled_filtered_mixed_down_s[::100].imag)
+# figure()
+# plot(downsampled_filtered_mixed_down_s[::100].real)
+# plot(downsampled_filtered_mixed_down_s[::100].imag)
 
 #repeat pulse to get ~0.15 sec.
-downsampled_filtered_mixed_down_s_repeated = np.tile(downsampled_filtered_mixed_down_s, 30)
+# downsampled_filtered_mixed_down_s_repeated = np.tile(downsampled_filtered_mixed_down_s, 30)
+downsampled_filtered_mixed_down_s_repeated = downsampled_filtered_mixed_down_s
+
 
 # Check how long dispersion actually is, need to have significantly longer than this worth of data to not worry.
 #t_delay = 4.15e15 * (1/(1.2e9)**2 - 1/(1.6e9)**2) * 15
@@ -95,24 +96,29 @@ H =  np.exp(2j*np.pi*4.148808e15*DM*f**2/((Flo+f)*Flo**2))  #freq in Hz, +/- aro
 
 dispersed_downsampled_filtered_mixed_down_s = np.fft.ifft(np.fft.fft(downsampled_filtered_mixed_down_s_repeated)*H)
 
-figure()
-plot(dispersed_downsampled_filtered_mixed_down_s[::50].real)
-plot(dispersed_downsampled_filtered_mixed_down_s[::50].imag)
+plt.figure()
+plt.plot(dispersed_downsampled_filtered_mixed_down_s[::50].real)
+plt.plot(dispersed_downsampled_filtered_mixed_down_s[::50].imag)
+plt.show()
 
 ##### Write to File #####
 print("Start Writing...")
 data_to_write = np.array([])
-with open("k-pulse.bin", 'ab') as file:
-    for index in range(0, dispersed_downsampled_filtered_mixed_down_s.size):
-        imag = dispersed_downsampled_filtered_mixed_down_s[index].real
-        real = dispersed_downsampled_filtered_mixed_down_s[index].imag
-        p1 = -1 * real + 1j * imag
-        file.write(bytes(np.complex64(p1)))
-        tenth = dispersed_downsampled_filtered_mixed_down_s.size/10
-        if((index % tenth) == 0):
-            print(str(int(index / tenth * 10)) + "%")
-        # data_to_write = np.append(data_to_write, np.complex64(p1))
-    # file.write(bytearray(data_to_write))
+real = dispersed_downsampled_filtered_mixed_down_s.real
+imag = dispersed_downsampled_filtered_mixed_down_s.imag
+pulse = np.complex64(real - 1j * imag)
+with open("k-pulse-pr-ni-array.bin", 'wb') as file:
+    # for index in range(0, dispersed_downsampled_filtered_mixed_down_s.size):
+    #     real = dispersed_downsampled_filtered_mixed_down_s[index].real
+    #     imag = dispersed_downsampled_filtered_mixed_down_s[index].imag
+    #     p1 = real - 1j * imag
+    #     # file.write(bytes(np.complex64(p1)))
+    #     tenth = dispersed_downsampled_filtered_mixed_down_s.size/10
+    #     if((index % tenth) == 0):
+    #         print(str(int(index / tenth * 10)) + "%")
+    #     data_to_write = np.append(data_to_write, np.complex64(p1))
+    file.write(bytearray(pulse))
+    file.close()
 print("Finished Writing")
 
 #close('all')
@@ -140,13 +146,13 @@ for i in range(n_spectra):
 
 spec_out.shape
 
-figure()
-plot(spec_out[:,399].real)
-plot(spec_out[:,398].real)
-plot(spec_out[:,300].real)
+# figure()
+# plot(spec_out[:,399].real)
+# plot(spec_out[:,398].real)
+# plot(spec_out[:,300].real)
 
-figure(figsize=(10,5))
-imshow(spec_out.real)
+# figure(figsize=(10,5))
+# imshow(spec_out.real)
 # this is naturally top first time, bottom last time, lowest freq on left, highest on right.  
 #  can see sweeping pulses starting top right, down to bottom left.
 
