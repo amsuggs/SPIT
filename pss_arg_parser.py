@@ -10,7 +10,7 @@ def parse_args():
     parser.add_argument('-b', '--bandwidth', help = 'Bandwidth of the pulse.', default = 400)
     parser.add_argument('-p', '--period', help = 'Amount of time the sample will last, '
                         'measured in milliseconds.', default = 200)
-    parser.add_argument('-f', '--file', help = 'Name for output file', default = 'spit_pulse')
+    parser.add_argument('-f', '--file', help = 'Name for output file', default = 'pss_complex_pulse')
     parser.add_argument('-v', '--version', action = 'version', version = 'SPIT 0.1')
 
     # Parse the arguments as given by the command line.
