@@ -1,12 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import sys
 import VersionZeroPointZero as PSS
 import math as maths
 import scipy as sp
 from scipy import signal
-import pickle
-import datetime
+import time
 import pss_arg_parser as ap
 import unit_exponent_parser as uep
 
@@ -33,9 +31,10 @@ Psr1 = PSS.Pulsar(Sig1)
 Psr1.make_pulses()
 
 # write files
-pulse = np.array([])
-file_str = "OutputFiles/pss_complex_signal.bin"
+now = time.strftime("%m.%d.%Y") + "-" + time.strftime("%H.%M.%S")
+file_str = "OutputFiles/" + params.file + "(%s).bin" % now #append the datetime to the end of the file.
 
+pulse = np.array([])
 with open(file_str, 'wb') as file:
     for index in range(0, Psr1.phase.size):
         real = Psr1.signal[0][index]

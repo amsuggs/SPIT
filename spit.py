@@ -1,8 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-import pickle
-import datetime
+import time
 import spit_arg_parser as ap
 import unit_exponent_parser as uep
 
@@ -80,7 +79,9 @@ def gauss_pulse(chirp, x, mean=vals['peak'], std_dev=vals['width']):
 #    plt.plot(pulse.imag)
 #    plt.show()
 
-    file_str = "OutputFiles/" + params.file + ".bin" #append the datetime to the end of the file.
+    now = time.strftime("%m.%d.%Y") + "-" + time.strftime("%H.%M.%S")
+    file_str = "OutputFiles/" + params.file + "(%s).bin" % now #append the datetime to the end of the file.
+   
     with open(file_str, 'wb') as file:
         file.write(bytearray(pulse))
         file.close()
