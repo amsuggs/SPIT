@@ -8,7 +8,7 @@ def parse_args():
     # Add arguments to the parser.
     parser.add_argument('-r', '--frequency', help = 'Central frequency of the pulse.', default = 1400)
     parser.add_argument('-b', '--bandwidth', help = 'Bandwidth of the pulse.', default = 400)
-    parser.add_argument('-p', '--period', help = 'Amount of time the sample will last, '
+    parser.add_argument('-p', '--period', help = 'Amount of time the cycle will last, '
                         'measured in milliseconds.', default = 200)
     parser.add_argument('-f', '--file', help = 'Name for output file', default = 'pss_complex_pulse')
     parser.add_argument('-v', '--version', action = 'version', version = 'SPIT 0.1')
