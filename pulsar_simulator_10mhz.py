@@ -94,7 +94,7 @@ f = np.linspace(-Fbw/2,Fbw/2,length)
 DM = 60
 H =  np.exp(2j*np.pi*4.148808e15*DM*f**2/((Flo+f)*Flo**2))  #freq in Hz, +/- around flo
 
-dispersed_downsampled_filtered_mixed_down_s = np.fft.ifft(np.fft.fft(downsampled_filtered_mixed_down_s_repeated)*H)
+dispersed_downsampled_filtered_mixed_down_s = np.fft.ifft(np.fft.fftshift(H)*np.fft.fft(downsampled_filtered_mixed_down_s_repeated))
 
 plt.figure()
 plt.plot(dispersed_downsampled_filtered_mixed_down_s[::50].real)
@@ -107,17 +107,22 @@ data_to_write = np.array([])
 # real = dispersed_downsampled_filtered_mixed_down_s.real
 # imag = dispersed_downsampled_filtered_mixed_down_s.imag
 # pulse = np.complex64(real - 1j * imag)
+
+##dispersed_downsampled_filtered_mixed_down_s.astype(np.complex64).tofile("testing_np_tofile.bin")
+
+tenth = dispersed_downsampled_filtered_mixed_down_s.size/10
+
 with open("k-pulse-pr-ni-array.bin", 'wb') as file:
-    for index in range(0, dispersed_downsampled_filtered_mixed_down_s.size):
-        real = dispersed_downsampled_filtered_mixed_down_s[index].real
-        imag = dispersed_downsampled_filtered_mixed_down_s[index].imag
-        p1 = real - 1j * imag
-        file.write(bytes(np.complex64(p1)))
-        tenth = dispersed_downsampled_filtered_mixed_down_s.size/10
-        if((index % tenth) == 0):
-            print(str(int(index / tenth * 10)) + "%")
-        data_to_write = np.append(data_to_write, np.complex64(p1))
-    # file.write(bytearray(pulse))
+    file.write(dispersed_downsampled_filtered_mixed_down_s.astype(np.complex64).tobytes())
+    # for index in range(0, dispersed_downsampled_filtered_mixed_down_s.size):
+    #     real = dispersed_downsampled_filtered_mixed_down_s[index].real
+    #     imag = dispersed_downsampled_filtered_mixed_down_s[index].imag
+    #     p1 = real - 1j * imag
+    #     file.write(bytes(np.complex64(p1)))
+    #     if((index % tenth) == 0):
+    #         print(str(int(index / tenth * 10)) + "%")
+    #     #data_to_write = np.append(data_to_write, np.complex64(p1))
+    # #file.write(bytearray(pulse))
     file.close()
 print("Finished Writing")
 
