@@ -20,7 +20,7 @@
 1. clone this repository
 2. cd into root directory of the repository
 3. `python spit.py`
-4. pulsar file will be out putted into hte PulsarSignalOutputs directory
+4. pulsar file will be outputt into the PulsarSignalOutputs directory
 
 
 ## Developer Information
